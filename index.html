@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>KTK</title>
+  <meta charset="UTF-8">
+  <title>Placefarm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-sA+utMO1wEPIz1SEyc4ZeAHt/VaZLNFp8pWZfYV+9HY=" crossorigin=""/>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header { text-align:center; padding:2em 1em; background:#8fc987; color:#fff; }
+    h1 { margin:0; }
+    section { padding:1em; }
+    #map { height:400px; margin-top:1em; }
+    footer { text-align:center; background:#f2f2f2; padding:1em 0; }
+  </style>
 </head>
 <body>
     <h1>KTK 환영합니다!</h1>
     <p>KTK 웹사이트입니다.</p>
+<header>
+  <h1>Placefarm에 오신 것을 환영합니다</h1>
+  <p>농지와 부동산 정보를 한눈에!</p>
+</header>
+<section>
+  <h2>농지 위치 보기</h2>
+  <div id="map"></div>
+</section>
+<section>
+  <h2>문의하기</h2>
+  <p>이메일: <a href="mailto:info@placefarm.com">info@placefarm.com</a></p>
+</section>
+<footer>
+  <p>&copy; 2025 Placefarm</p>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o+J3arE1FsawMLaVlgG3E" crossorigin=""></script>
+<script>
+var map = L.map('map').setView([37.5665, 126.9780], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+var farms = [
+  { name: '경기 농지', lat: 37.3, lon: 126.8 },
+  { name: '충남 농지', lat: 36.4, lon: 126.9 }
+];
+farms.forEach(function(farm) {
+  L.marker([farm.lat, farm.lon]).addTo(map)
+    .bindPopup('<b>' + farm.name + '</b>');
+});
+</script>
 </body>
 </html>

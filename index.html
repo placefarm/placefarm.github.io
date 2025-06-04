@@ -5,31 +5,93 @@
     <meta charset="UTF-8">
     <title>KTK</title>
   <meta charset="UTF-8">
-  <title>Placefarm</title>
+  <title>Placefarm | 재미있는 농지 탐험</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-sA+utMO1wEPIz1SEyc4ZeAHt/VaZLNFp8pWZfYV+9HY=" crossorigin=""/>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    header { text-align:center; padding:2em 1em; background:#8fc987; color:#fff; }
-    h1 { margin:0; }
-    section { padding:1em; }
+    body { margin:0; font-family: Arial, sans-serif; line-height:1.6; }
+    nav { background:#4caf50; color:#fff; }
+    nav ul { list-style:none; display:flex; justify-content:center; margin:0; padding:0; }
+    nav li { margin:0 1em; }
+    nav a { color:#fff; text-decoration:none; font-weight:bold; }
+    nav.sticky { position:sticky; top:0; z-index:1000; }
+    header.hero { background:url('https://images.unsplash.com/photo-1488188840666-e2308741a62f?auto=format&fit=crop&w=1200&q=60') center/cover no-repeat; color:#fff; text-align:center; padding:5em 1em; }
+    header.hero h1 { font-size:2.5em; margin:0 0 0.5em; }
+    section { padding:2em 1em; }
+    .slider { position:relative; overflow:hidden; height:300px; }
+    .slides { display:flex; width:300%; height:100%; animation:slide 15s infinite; }
+    .slides img { width:100%; object-fit:cover; }
+    @keyframes slide {
+      0%,33% { margin-left:0; }
+      45%,78% { margin-left:-100%; }
+      90%,100% { margin-left:-200%; }
+    }
     #map { height:400px; margin-top:1em; }
-    footer { text-align:center; background:#f2f2f2; padding:1em 0; }
+    .filter { text-align:center; margin-bottom:1em; }
+    .cards { display:flex; flex-wrap:wrap; gap:1em; justify-content:center; }
+    .card { border:1px solid #ddd; border-radius:4px; padding:1em; width:260px; }
+    footer { text-align:center; background:#f2f2f2; padding:1em 0; font-size:0.9em; }
   </style>
 </head>
 <body>
     <h1>KTK 환영합니다!</h1>
     <p>KTK 웹사이트입니다.</p>
-<header>
+<nav class="sticky">
+  <ul>
+    <li><a href="#home">홈</a></li>
+    <li><a href="#highlights">하이라이트</a></li>
+    <li><a href="#map-section">지도</a></li>
+    <li><a href="#listings">매물</a></li>
+    <li><a href="#contact">문의</a></li>
+  </ul>
+</nav>
+<header id="home" class="hero">
   <h1>Placefarm에 오신 것을 환영합니다</h1>
-  <p>농지와 부동산 정보를 한눈에!</p>
+  <p>placefarm.modoo.at의 새로운 경험을 즐겨보세요</p>
 </header>
-<section>
-  <h2>농지 위치 보기</h2>
+<section id="highlights">
+  <h2 style="text-align:center">Placefarm 하이라이트</h2>
+  <div class="slider">
+    <div class="slides">
+      <img src="https://images.unsplash.com/photo-1600431521340-491eca880813?auto=format&fit=crop&w=1200&q=60" alt="농장1">
+      <img src="https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?auto=format&fit=crop&w=1200&q=60" alt="농장2">
+      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=60" alt="농장3">
+    </div>
+  </div>
+</section>
+<section id="map-section">
+  <h2>농지 위치</h2>
+  <div class="filter">
+    <label for="region-filter">지역 선택:</label>
+    <select id="region-filter">
+      <option value="all">전체</option>
+      <option value="경기">경기</option>
+      <option value="충남">충남</option>
+      <option value="전북">전북</option>
+      <option value="강원">강원</option>
+    </select>
+  </div>
   <div id="map"></div>
 </section>
-<section>
+<section id="listings">
+  <h2>추천 매물</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>경기 화성 농지</h3>
+      <p>면적: 1000평 / 가격: 5억원</p>
+    </div>
+    <div class="card">
+      <h3>충남 서산 농지</h3>
+      <p>면적: 800평 / 가격: 3억원</p>
+    </div>
+    <div class="card">
+      <h3>전북 전주 농지</h3>
+      <p>면적: 1200평 / 가격: 6억원</p>
+    </div>
+  </div>
+</section>
+<section id="contact">
   <h2>문의하기</h2>
   <p>이메일: <a href="mailto:info@placefarm.com">info@placefarm.com</a></p>
 </section>
@@ -44,13 +106,26 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 var farms = [
-  { name: '경기 농지', lat: 37.3, lon: 126.8 },
-  { name: '충남 농지', lat: 36.4, lon: 126.9 }
+  { name: '경기 화성', region: '경기', lat: 37.199, lon: 126.831 },
+  { name: '충남 서산', region: '충남', lat: 36.781, lon: 126.451 },
+  { name: '전북 전주', region: '전북', lat: 35.821, lon: 127.148 },
+  { name: '강원 강릉', region: '강원', lat: 37.752, lon: 128.896 }
 ];
-farms.forEach(function(farm) {
-  L.marker([farm.lat, farm.lon]).addTo(map)
-    .bindPopup('<b>' + farm.name + '</b>');
+var markers = [];
+function showFarms(region) {
+  markers.forEach(function(m) { map.removeLayer(m); });
+  markers = [];
+  farms.filter(function(f) {
+    return region === 'all' || f.region === region;
+  }).forEach(function(f) {
+    var marker = L.marker([f.lat, f.lon]).addTo(map).bindPopup('<b>' + f.name + '</b>');
+    markers.push(marker);
+  });
+}
+document.getElementById('region-filter').addEventListener('change', function(e){
+  showFarms(e.target.value);
 });
+showFarms('all');
 </script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+# Ignore sensitive credential files
+*.json
+*creds.json
+*token*
+.env
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

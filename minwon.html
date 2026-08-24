@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>민원 접수 · 이학정 남동구의원</title>
+<meta name="description" content="생활 불편·지역 현안·정책 제안을 접수합니다. 접수번호로 진행 상황을 조회하세요.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>더불어민주당 · 인천 남동구 논현동</span>
+  <span>민원·제안 <a href="mailto:yes2plasma@gmail.com">yes2plasma@gmail.com</a></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">이학정 <span class="badge">남동구의원</span></a>
+  <nav class="main">
+    <a href="index.html">홈</a>
+    <a href="about.html">소개</a>
+    <a href="pledges.html">공약·활동</a>
+    <a href="minwon.html" class="active">민원접수</a>
+    <a href="status.html">진행조회</a>
+    <a href="support.html">후원</a>
+    <a href="join.html" class="cta">함께하기</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="kicker">투명하게, 끝까지</span>
+  <h1>민원·정책 <em>제안</em> 접수</h1>
+  <p class="lead">접수된 내용은 사무실 메일로 안전하게 전달되어 순차 처리됩니다. 접수 후 받으시는 <b>접수번호</b>와 직접 정하신 <b>조회 비밀번호</b>로 진행 상황을 확인할 수 있습니다.</p>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <form class="formcard" id="minwonForm" autocomplete="off">
+    <div class="field">
+      <label>민원 유형 <span class="req">*</span></label>
+      <select name="유형" required>
+        <option value="">선택하세요</option>
+        <option>생활 불편</option>
+        <option>교통</option>
+        <option>교육</option>
+        <option>환경·생태</option>
+        <option>관광·경제</option>
+        <option>복지·안전</option>
+        <option>정책 제안</option>
+        <option>기타</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>제목 <span class="req">*</span></label>
+      <input type="text" name="제목" maxlength="80" required placeholder="예) 논현동 OO사거리 신호 체계 개선 요청">
+    </div>
+
+    <div class="field">
+      <label>내용 <span class="req">*</span> <span class="hint">— 위치·상황을 구체적으로 적어주시면 처리가 빨라집니다.</span></label>
+      <textarea name="내용" required placeholder="언제, 어디서, 어떤 문제가 있는지 적어주세요."></textarea>
+    </div>
+
+    <div class="field">
+      <label>지역/동 <span class="hint">(선택)</span></label>
+      <input type="text" name="지역" maxlength="60" placeholder="예) 논현동 / 고잔동">
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>성함(또는 닉네임) <span class="req">*</span></label>
+        <input type="text" name="이름" maxlength="30" required placeholder="실명 또는 부르실 이름">
+      </div>
+      <div class="field">
+        <label>조회 비밀번호 <span class="req">*</span> <span class="hint">숫자 4자리</span></label>
+        <input type="password" name="비밀번호" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required placeholder="진행 조회 시 사용">
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>연락처 <span class="hint">(연락처·이메일 중 하나 필수)</span></label>
+        <input type="tel" name="연락처" maxlength="20" placeholder="010-0000-0000">
+      </div>
+      <div class="field">
+        <label>이메일 <span class="hint">(선택)</span></label>
+        <input type="email" name="이메일" maxlength="60" placeholder="name@email.com">
+      </div>
+    </div>
+
+    <div class="consent">
+      <b>개인정보 수집·이용 동의</b>
+      <table>
+        <tr><th>수집 항목</th><td>성함(닉네임), 연락처 또는 이메일, 조회 비밀번호, 민원 내용</td></tr>
+        <tr><th>이용 목적</th><td>민원 접수·처리 및 결과 회신, 진행 상황 조회 본인 확인</td></tr>
+        <tr><th>보유·이용 기간</th><td>처리 완료 후 1년 보관 뒤 파기(관련 법령에 따른 경우 그 기간)</td></tr>
+        <tr><th>거부 권리</th><td>동의를 거부할 수 있으나, 거부 시 민원 접수·처리가 제한됩니다.</td></tr>
+      </table>
+      <label class="chk"><input type="checkbox" id="agree" required> 위 개인정보 수집·이용에 동의합니다. <span class="req">*</span></label>
+      <details><summary>개인정보처리방침 전문 보기</summary>
+        <p style="margin-top:8px">수집된 정보는 담당자 외 열람이 제한되며, 진행 조회 화면에는 이름·연락처 등 개인정보가 표시되지 않고 처리 상태만 안내됩니다. 자세한 내용은 <a href="privacy.html">개인정보처리방침</a>을 확인하세요.</p>
+      </details>
+    </div>
+
+    <div style="margin-top:22px">
+      <button type="submit" class="btn btn-coral btn-lg" id="submitBtn">민원 접수하기</button>
+    </div>
+
+    <div class="result" id="result"></div>
+  </form>
+</div></section>
+
+<footer class="site"><div class="wrap">
+  <div>
+    <div class="brand">이학정 · 남동구의원</div>
+    <div>인천 남동구 논현동 · 더불어민주당</div>
+    <div class="fine">민원·제안: yes2plasma@gmail.com · <a href="privacy.html">개인정보처리방침</a></div>
+  </div>
+  <div>
+    <a href="about.html">소개</a> · <a href="pledges.html">공약·활동</a><br>
+    <a href="minwon.html">민원접수</a> · <a href="status.html">진행조회</a><br>
+    <a href="support.html">후원</a> · <a href="join.html">함께하기</a>
+  </div>
+</div></footer>
+
+<script src="config.js"></script>
+<script>
+const form = document.getElementById('minwonForm');
+const result = document.getElementById('result');
+const btn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  result.className = 'result';
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  if(!document.getElementById('agree').checked){ return showErr('개인정보 수집·이용에 동의해주세요.'); }
+  if(!/^[0-9]{4}$/.test(data['비밀번호'])){ return showErr('조회 비밀번호는 숫자 4자리로 입력해주세요.'); }
+  if(!data['연락처'] && !data['이메일']){ return showErr('연락처 또는 이메일 중 하나는 반드시 입력해주세요.'); }
+
+  if(!SITE_CONFIG.API_URL || SITE_CONFIG.API_URL.indexOf('http')!==0){
+    return showErr('아직 서버(Apps Script) 주소가 설정되지 않았습니다. config.js의 API_URL을 먼저 입력하세요.');
+  }
+
+  btn.disabled = true; btn.textContent = '접수 중...';
+  data.action = 'minwon';
+  data.동의 = '동의';
+  try{
+    const res = await fetch(SITE_CONFIG.API_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+      body:new URLSearchParams(data).toString()
+    });
+    const json = await res.json();
+    if(json.ok){
+      result.className = 'result ok show';
+      result.innerHTML = '민원이 정상 접수되었습니다.<br>아래 <b>접수번호</b>와 입력하신 <b>조회 비밀번호</b>를 꼭 저장하세요.<div class="code">'+json.code+'</div><a href="status.html" class="btn btn-blue" style="margin-top:12px">진행 상황 조회하기 →</a>';
+      form.reset();
+    }else{
+      showErr(json.error || '접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  }catch(err){
+    showErr('네트워크 오류로 접수하지 못했습니다. 잠시 후 다시 시도하거나 yes2plasma@gmail.com 으로 보내주세요.');
+  }finally{
+    btn.disabled = false; btn.textContent = '민원 접수하기';
+  }
+});
+
+function showErr(msg){
+  result.className = 'result err show';
+  result.textContent = msg;
+  result.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

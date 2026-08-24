@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>진행 상황 조회 · 이학정 남동구의원</title>
+<meta name="description" content="접수번호와 조회 비밀번호로 민원 진행 상황을 확인하세요.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>더불어민주당 · 인천 남동구 논현동</span>
+  <span>민원·제안 <a href="mailto:yes2plasma@gmail.com">yes2plasma@gmail.com</a></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">이학정 <span class="badge">남동구의원</span></a>
+  <nav class="main">
+    <a href="index.html">홈</a>
+    <a href="about.html">소개</a>
+    <a href="pledges.html">공약·활동</a>
+    <a href="minwon.html">민원접수</a>
+    <a href="status.html" class="active">진행조회</a>
+    <a href="support.html">후원</a>
+    <a href="join.html" class="cta">함께하기</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="kicker">개인정보 노출 없는 조회</span>
+  <h1>민원 <em>진행 상황</em> 조회</h1>
+  <p class="lead">접수 시 받은 접수번호와 본인이 정한 조회 비밀번호를 입력하세요. 이름·연락처 등 개인정보는 표시되지 않고 처리 단계만 안내됩니다.</p>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <form class="formcard" id="statusForm" autocomplete="off">
+    <div class="field">
+      <label>접수번호 <span class="req">*</span></label>
+      <input type="text" name="code" required placeholder="예) MW-20260823-4821" style="text-transform:uppercase">
+    </div>
+    <div class="field">
+      <label>조회 비밀번호 <span class="req">*</span> <span class="hint">숫자 4자리</span></label>
+      <input type="password" name="pin" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required placeholder="접수 시 정한 4자리">
+    </div>
+    <button type="submit" class="btn btn-blue btn-lg" id="lookupBtn">조회하기</button>
+    <div class="result" id="result"></div>
+  </form>
+</div></section>
+
+<footer class="site"><div class="wrap">
+  <div>
+    <div class="brand">이학정 · 남동구의원</div>
+    <div>인천 남동구 논현동 · 더불어민주당</div>
+    <div class="fine">민원·제안: yes2plasma@gmail.com · <a href="privacy.html">개인정보처리방침</a></div>
+  </div>
+  <div>
+    <a href="about.html">소개</a> · <a href="pledges.html">공약·활동</a><br>
+    <a href="minwon.html">민원접수</a> · <a href="status.html">진행조회</a><br>
+    <a href="support.html">후원</a> · <a href="join.html">함께하기</a>
+  </div>
+</div></footer>
+
+<script src="config.js"></script>
+<script>
+const STEPS = ['접수','등록','진행중','보완요청','완료'];
+const form = document.getElementById('statusForm');
+const result = document.getElementById('result');
+const btn = document.getElementById('lookupBtn');
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  result.className = 'result';
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.code = (data.code||'').trim().toUpperCase();
+
+  if(!SITE_CONFIG.API_URL || SITE_CONFIG.API_URL.indexOf('http')!==0){
+    return showErr('아직 서버(Apps Script) 주소가 설정되지 않았습니다. config.js의 API_URL을 먼저 입력하세요.');
+  }
+
+  btn.disabled = true; btn.textContent = '조회 중...';
+  data.action = 'status';
+  try{
+    const res = await fetch(SITE_CONFIG.API_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+      body:new URLSearchParams(data).toString()
+    });
+    const json = await res.json();
+    if(json.ok){
+      renderStatus(json);
+    }else{
+      showErr(json.error || '일치하는 민원을 찾을 수 없습니다. 접수번호와 비밀번호를 확인해주세요.');
+    }
+  }catch(err){
+    showErr('네트워크 오류로 조회하지 못했습니다. 잠시 후 다시 시도해주세요.');
+  }finally{
+    btn.disabled = false; btn.textContent = '조회하기';
+  }
+});
+
+function renderStatus(j){
+  const cur = STEPS.indexOf(j.status);
+  let stepsHtml = '<div class="steps">';
+  STEPS.forEach((s,i)=>{
+    const active = (s===j.status);
+    const done = (cur>=0 && i<=cur);
+    stepsHtml += '<div class="step" style="'+(active?'border-color:var(--blue);background:#e6f0ff':(done?'opacity:1':'opacity:.55'))+'"><b>'+(i+1)+'. '+s+'</b><small>'+(active?'현재 단계':(done?'완료':'대기'))+'</small></div>';
+  });
+  stepsHtml += '</div>';
+
+  result.className = 'result ok show';
+  result.innerHTML =
+    '<div>접수번호 <b>'+escapeH(j.code)+'</b>'+(j.type?' · '+escapeH(j.type):'')+'</div>'+
+    '<div style="margin:10px 0"><span class="badge-status s-'+escapeH(j.status)+'">'+escapeH(j.status)+'</span></div>'+
+    stepsHtml+
+    (j.memo?'<div style="margin-top:16px"><b>담당자 안내</b><br>'+escapeH(j.memo)+'</div>':'')+
+    '<div style="margin-top:14px;color:var(--muted);font-size:.9rem">접수일 '+escapeH(j.created||'-')+' · 최근 업데이트 '+escapeH(j.updated||'-')+'</div>';
+}
+
+function showErr(msg){
+  result.className='result err show';
+  result.textContent=msg;
+}
+function escapeH(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>

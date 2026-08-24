@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>함께하기 · 입당·활동·후원 문의</title>
+<meta name="description" content="당원 가입, 마을 활동 참여, 후원 문의 — 연락처를 남기면 이학정이 직접 연락드립니다.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>더불어민주당 · 인천 남동구 논현동</span>
+  <span>민원·제안 <a href="mailto:yes2plasma@gmail.com">yes2plasma@gmail.com</a></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">이학정 <span class="badge">남동구의원</span></a>
+  <nav class="main">
+    <a href="index.html">홈</a>
+    <a href="about.html">소개</a>
+    <a href="pledges.html">공약·활동</a>
+    <a href="minwon.html">민원접수</a>
+    <a href="status.html">진행조회</a>
+    <a href="support.html">후원</a>
+    <a href="join.html" class="cta active">함께하기</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="kicker">열린 당원 라운지</span>
+  <h1>함께 만드는<br>기분 좋은 <em>변화</em></h1>
+  <p class="lead">당원으로 함께하거나, 마을 활동에 참여하거나, 후원을 문의하고 싶은 분은 연락처를 남겨 주세요. 이학정이 직접 연락드립니다.</p>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <form class="formcard" id="contactForm" autocomplete="off">
+    <div class="field">
+      <label>문의 유형 <span class="req">*</span></label>
+      <select name="구분" required>
+        <option value="">선택하세요</option>
+        <option>입당(당원 가입) 희망</option>
+        <option>마을 활동 참여</option>
+        <option>후원 문의·영수증</option>
+        <option>정책 제안·협업</option>
+        <option>기타</option>
+      </select>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>성함 <span class="req">*</span></label>
+        <input type="text" name="이름" maxlength="30" required placeholder="성함">
+      </div>
+      <div class="field">
+        <label>연락처 <span class="req">*</span></label>
+        <input type="tel" name="연락처" maxlength="20" required placeholder="010-0000-0000">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>이메일 <span class="hint">(선택)</span></label>
+      <input type="email" name="이메일" maxlength="60" placeholder="name@email.com">
+    </div>
+
+    <div class="field">
+      <label>남기실 말씀 <span class="hint">(선택)</span></label>
+      <textarea name="메모" placeholder="편하게 남겨 주세요. 연락 가능한 시간대 등을 적어주시면 좋습니다."></textarea>
+    </div>
+
+    <div class="consent">
+      <b>개인정보 수집·이용 동의</b>
+      <table>
+        <tr><th>수집 항목</th><td>성함, 연락처, 이메일(선택), 문의 내용</td></tr>
+        <tr><th>이용 목적</th><td>입당·활동·후원 문의 응대 및 직접 연락</td></tr>
+        <tr><th>보유·이용 기간</th><td>문의 처리 및 관계 유지 목적 달성 시까지(요청 시 즉시 파기)</td></tr>
+        <tr><th>거부 권리</th><td>동의를 거부할 수 있으나, 거부 시 연락·안내가 제한됩니다.</td></tr>
+      </table>
+      <label class="chk"><input type="checkbox" id="agree" required> 위 개인정보 수집·이용에 동의합니다. <span class="req">*</span></label>
+      <p style="margin-top:8px;font-size:.85rem">※ 당원 가입 절차 자체는 더불어민주당 공식 시스템을 통해 진행되며, 본 문의는 안내를 위한 것입니다. <a href="privacy.html">개인정보처리방침</a></p>
+    </div>
+
+    <div style="margin-top:22px">
+      <button type="submit" class="btn btn-coral btn-lg" id="submitBtn">문의 남기기</button>
+    </div>
+    <div class="result" id="result"></div>
+  </form>
+</div></section>
+
+<footer class="site"><div class="wrap">
+  <div>
+    <div class="brand">이학정 · 남동구의원</div>
+    <div>인천 남동구 논현동 · 더불어민주당</div>
+    <div class="fine">민원·제안: yes2plasma@gmail.com · <a href="privacy.html">개인정보처리방침</a></div>
+  </div>
+  <div>
+    <a href="about.html">소개</a> · <a href="pledges.html">공약·활동</a><br>
+    <a href="minwon.html">민원접수</a> · <a href="status.html">진행조회</a><br>
+    <a href="support.html">후원</a> · <a href="join.html">함께하기</a>
+  </div>
+</div></footer>
+
+<script src="config.js"></script>
+<script>
+const form = document.getElementById('contactForm');
+const result = document.getElementById('result');
+const btn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  result.className='result';
+  const data = Object.fromEntries(new FormData(form).entries());
+  if(!document.getElementById('agree').checked){ return showErr('개인정보 수집·이용에 동의해주세요.'); }
+  if(!SITE_CONFIG.API_URL || SITE_CONFIG.API_URL.indexOf('http')!==0){
+    return showErr('아직 서버(Apps Script) 주소가 설정되지 않았습니다. config.js의 API_URL을 먼저 입력하세요.');
+  }
+  btn.disabled=true; btn.textContent='전송 중...';
+  data.action='contact';
+  data.동의='동의';
+  try{
+    const res = await fetch(SITE_CONFIG.API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+      body:new URLSearchParams(data).toString()
+    });
+    const json = await res.json();
+    if(json.ok){
+      result.className='result ok show';
+      result.innerHTML='소중한 문의 감사합니다. 이학정이 직접 연락드리겠습니다.';
+      form.reset();
+    }else{
+      showErr(json.error || '전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  }catch(err){
+    showErr('네트워크 오류로 전송하지 못했습니다. yes2plasma@gmail.com 으로 보내주셔도 됩니다.');
+  }finally{
+    btn.disabled=false; btn.textContent='문의 남기기';
+  }
+});
+function showErr(msg){ result.className='result err show'; result.textContent=msg; }
+</script>
+</body>
+</html>

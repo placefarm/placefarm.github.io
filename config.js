@@ -5,6 +5,6 @@
    (예: https://script.google.com/macros/s/AKfyc..../exec)
    ========================================================= */
 window.SITE_CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycbyL8GmOJWl4m0KrweAeLSSnX4xB-9Um3Ra6hUhNmNVJGSJGcWhP7HL6rqOvc3UOSFyS/exec",
+  API_URL: "https://script.google.com/macros/s/AKfycbwkVN-pqF-R47XI3eshV91w4StXiwxo1PwfXZXRihN-tbCKAAZjK5ma03f8_QG0Dn-s/exec",
   OFFICE_EMAIL: "yes2plasma@gmail.com"
 };

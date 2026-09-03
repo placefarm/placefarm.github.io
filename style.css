@@ -253,7 +253,7 @@ footer.site .fine{font-size:.8rem;color:#8ba6c4;margin-top:10px;line-height:1.6}
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat.wide{grid-column:span 2}
   .infocol{grid-template-columns:1fr}
-  .photo-hero .portrait{display:none}
+  .photo-hero .portrait{display:block}
   .photo-hero .scrim{background:linear-gradient(0deg,rgba(9,20,34,.9) 0%,rgba(9,20,34,.25) 70%)}
 }
 @media (max-width:560px){
@@ -283,4 +283,20 @@ footer.site .fine{font-size:.8rem;color:#8ba6c4;margin-top:10px;line-height:1.6}
   header.site nav.main.open{display:flex}
   header.site nav.main a{font-size:1rem;padding:13px 12px;border-radius:10px}
   header.site nav.main a.cta{margin-top:6px;text-align:center}
+}
+
+
+/* ===== 히어로 인물 이미지 모바일 표시 — 자동 추가 ===== */
+/* 640px 이하: 인물을 텍스트 아래로 내려 겹치지 않게, 크기는 적당히 제한 */
+@media (max-width:640px){
+  .photo-hero{display:flex;flex-direction:column}
+  .photo-hero .wrap{order:1;min-height:0;justify-content:flex-start;padding:34px 22px 6px}
+  .photo-hero .portrait{
+    order:2;position:static;display:block;
+    width:auto;height:auto;max-width:58%;max-height:290px;
+    margin:16px auto 0;padding-bottom:20px;
+    filter:drop-shadow(0 12px 22px rgba(0,0,0,.45))
+  }
+  /* 텍스트가 위로 올라오므로 위쪽도 어둡게 해 가독성 확보 */
+  .photo-hero .scrim{background:linear-gradient(180deg,rgba(9,20,34,.86) 0%,rgba(9,20,34,.42) 52%,rgba(9,20,34,.72) 100%)}
 }

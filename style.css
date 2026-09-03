@@ -94,8 +94,7 @@ nav.main a.cta:hover{background:#b8481f}
 .photo-hero h1 em{font-style:normal;color:var(--sunset)}
 .photo-hero .sub{margin-top:16px;max-width:40ch;font-size:1.1rem;color:#eaf1f8;font-weight:500}
 .photo-hero .btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
-.photo-hero .portrait{position:absolute;right:5%;bottom:0;z-index:2;width:clamp(150px,17vw,230px);
-  filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.photo-hero .portrait{display:none}   /* 히어로 안 큰 사진은 항상 숨김 — PC·모바일 모두 우하단 플로팅으로 대체 */
 .photo-hero .credit{position:absolute;right:12px;top:12px;z-index:2;font-size:.68rem;color:rgba(255,255,255,.6);
   font-family:var(--num);letter-spacing:.03em}
 
@@ -253,7 +252,6 @@ footer.site .fine{font-size:.8rem;color:#8ba6c4;margin-top:10px;line-height:1.6}
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat.wide{grid-column:span 2}
   .infocol{grid-template-columns:1fr}
-  .photo-hero .portrait{display:block}
   .photo-hero .scrim{background:linear-gradient(0deg,rgba(9,20,34,.9) 0%,rgba(9,20,34,.25) 70%)}
 }
 @media (max-width:560px){
@@ -288,9 +286,9 @@ footer.site .fine{font-size:.8rem;color:#8ba6c4;margin-top:10px;line-height:1.6}
 
 /* ===== 인물 이미지 — 홈(첫 화면) 우하단 플로팅 + 닫기 버튼 ===== */
 /* nav.js가 홈 페이지 <body>에만 .float-portrait-wrap 을 넣어 줌.
-   기본은 숨김(데스크톱은 히어로 사진 그대로), 640px 이하 휴대폰에서만 표시. */
+   PC·모바일 모두 우하단에 작게 떠 있음(히어로 안 큰 사진은 숨김). */
 .float-portrait-wrap{
-  display:none;
+  display:block;
   position:fixed; right:12px; bottom:12px; z-index:60;
   pointer-events:none;                           /* 사진은 클릭 통과 — 뒤 버튼 정상 동작 */
 }
@@ -311,7 +309,10 @@ footer.site .fine{font-size:.8rem;color:#8ba6c4;margin-top:10px;line-height:1.6}
   box-shadow:0 2px 6px rgba(0,0,0,.3)
 }
 @media (max-width:640px){
-  .photo-hero .portrait{display:none}            /* 히어로 안 사진 숨김 — 플로팅으로 대체 */
-  .float-portrait-wrap{display:block}
   .photo-hero .scrim{background:linear-gradient(0deg,rgba(9,20,34,.9) 0%,rgba(9,20,34,.25) 70%)}
+}
+/* PC(넓은 화면)에서는 플로팅 사진을 조금 더 크게 */
+@media (min-width:901px){
+  .float-portrait{height:clamp(170px,24vh,220px)}
+  .float-portrait-wrap{right:20px; bottom:20px}
 }

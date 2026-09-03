@@ -14,6 +14,7 @@
   .doc li{margin-bottom:5px}
   .doc .updated{color:var(--muted);font-size:.86rem}
 </style>
+  <script src="nav.js" defer></script>
 </head>
 <body>
 
@@ -24,7 +25,8 @@
 
 <header class="site"><div class="wrap">
   <a class="logo" href="index.html">이학정 <span class="badge">남동구의원</span></a>
-  <nav class="main">
+  <button class="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainnav"><span></span></button>
+  <nav class="main" id="mainnav">
     <a href="index.html">홈</a>
     <a href="about.html">소개</a>
     <a href="pledges.html">공약·활동</a>
